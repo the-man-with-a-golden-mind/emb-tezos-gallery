@@ -6,6 +6,7 @@
    (owl parse)
    (owl async)
    (file json)
+   (scheme file)
    (owl ff))
 
   (export process-tokens
@@ -58,14 +59,14 @@
           (print "Processing request")))
 
     (define (get-file-ipfs file-code)
-      (begin
-        (print file-code)
-        (let* ((cleared-name (substring file-code 7))
-               (url (string-append "https://ipfs.io/ipfs/"  cleared-name))
-                  (command (download-file url (string-append "./images/" cleared-name ".jpeg")))
-                  (result (make-request command #false)))
-          (print "RESULTTT")
-             )))
+      (let ((cleared-name (substring file-code 7)))
+        (if (file-exists? (string-append "./images/" cleared-name ".jpeg"))
+            (print "File " file-code " already exists!")
+                  (let* ((url (string-append "https://ipfs.io/ipfs/"  cleared-name))
+                         (command (download-file url (string-append "./images/" cleared-name ".jpeg")))
+                         (result (make-request command #false)))
+                    (print "Getting file " cleared-name)
+                    ))))
 
     (define (process-tokens body)
       (let* ((balances (getf body 'balances))
@@ -74,14 +75,11 @@
         ipfs-links))
 
     (define (get-files ipfs-files)
-      (begin
-        (print "IPFS FILES")
-        (print ipfs-files)
-        (map (lambda (f) (begin
-                          (print "IPFS FILE: ")
-                          (print f)
-                          (async (get-file-ipfs f))
-                          )) ipfs-files)))
+      (map (lambda (f) (begin
+                         (print "IPFS FILE: ")
+                         (print f)
+                         (async (get-file-ipfs f))
+                         )) ipfs-files))
 
     (define (get-tokens)
       (let* ((command (build-command-url "https://api.better-call.dev/v1/account/mainnet/tz2JPfBB2fpf9DRzXjVi5U4CAEoENU2dnz8e/token_balances"))

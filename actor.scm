@@ -17,9 +17,6 @@
                                (case msg
                                  (['d]
                                   (let ((q (this 'queue)))
-                                    ;;(print "Q:")
-                                    ;;(print q)
-                                   
                                     (if (= (length q) 0)
                                         (let* ((tokens (get-tokens))
                                                (first-token (car tokens))
