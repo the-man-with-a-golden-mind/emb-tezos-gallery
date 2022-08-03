@@ -1,0 +1,30 @@
+(define *path* (cons "./" *path*))
+(print *path*)
+(import (actor))
+(import (otus lisp))
+(print "ACTOR")
+(import (bot gallery))
+(print "1")
+(print "2")
+
+(define (run)
+  (let* ((tokens (get-tokens))
+         (files (get-files tokens)))
+    (print tokens))
+  )
+
+(print "PREDOWNLOAD")
+(run-actor)
+;;(mail 'downloader ['d])
+(print "asdasd")
+(define (while)
+  (print "RUN")
+  (let loop ()
+    (mail 'downloader ['d])
+
+    (sleep 1)
+    (loop)
+    ))
+
+
+(while)
