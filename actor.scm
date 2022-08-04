@@ -17,7 +17,6 @@
                                     (sender msg envelope))
                                (case msg
                                  (['start wallet-addr diff]
-                                  ;(mail sender 'ok)
                                   (mail self ['download-nft])
                                   (loop
                                    {'queue '()
@@ -29,10 +28,9 @@
                                   (let ((q (this 'queue))
                                         (wallet (this 'wallet))
                                         (timestamp (this 'lasttimestamp))
-                                        (diff (this 'diff)))
-                                  
+                                        (diff (this 'diff))) 
                                     (if (= (length q) 0)
-                                        (let* ((tokens (get-tokens))
+                                        (let* ((tokens (get-tokens wallet))
                                                (first-token (car tokens))
                                                (rest (cdr tokens)))
                                           (async (lambda ()  (get-file-ipfs first-token)))
@@ -51,8 +49,8 @@
                                               (loop this))
                                             ))))
                                  (else
-                                  (print "MSG")
-                                  (print msg)
+                                  (print "Actor " self " can not understand message: " msg)
+                                  (loop this)
                                   )))))))
 
 

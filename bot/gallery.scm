@@ -81,8 +81,8 @@
                          (async (get-file-ipfs f))
                          )) ipfs-files))
 
-    (define (get-tokens)
-      (let* ((command (build-command-url "https://api.better-call.dev/v1/account/mainnet/tz2JPfBB2fpf9DRzXjVi5U4CAEoENU2dnz8e/token_balances"))
+    (define (get-tokens wallet-addr)
+      (let* ((command (build-command-url (string-append "https://api.better-call.dev/v1/account/mainnet/" wallet-addr "/token_balances")))
              (request (make-request command #true))
              (links (process-tokens request)))
         links))))
