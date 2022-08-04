@@ -11,12 +11,12 @@
     (print tokens))
   )
 
-(run-actor)
-
+(run-tezos-downloader-actor)
+(mail 'nft-tezos-downloader ['start "aasdasd" 5000])
 (define (while)
   (let loop ()
     ;; Run NFT Tezos Downloader
-    (await (mail 'nft-tezos-downloader ['d]))
+    (await (async (lambda () '())))
     (sleep 1)
     (loop)
     ))
