@@ -37,8 +37,6 @@
 
 
     (define (make-request command return?)
-      (print "MAKE REQUEST")
-      (print command)
       (define In (syscall 22))
       (define Out (syscall 22))
 

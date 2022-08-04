@@ -9,20 +9,14 @@
       (print "Actor: downloader is running")
       (define self 'nft-tezos-downloader)
       (actor self (lambda ()
-                           (let loop ((this {'diff 5000
-                                                   'wallet ""
-                                                   'queue '()
-                                                   'lasttimestamp (time-ms)}))
+                           (let loop ((this {'diff 5000 'wallet "" 'queue '() 'lasttimestamp (time-ms)}))
                              (let* ((envelope (wait-mail))
                                     (sender msg envelope))
                                (case msg
                                  (['start wallet-addr diff]
                                   (mail self ['download-nft])
                                   (loop
-                                   {'queue '()
-                                           'diff diff
-                                           'wallet wallet-addr
-                                           'lasttimestamp (time-ms)}))
+                                   {'queue '() 'diff diff 'wallet wallet-addr 'lasttimestamp (time-ms)}))
                                  (['download-nft]
                                   (mail sender 'ok)
                                   (let ((q (this 'queue))
