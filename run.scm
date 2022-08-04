@@ -15,9 +15,9 @@
 
 (define (while)
   (let loop ()
-    (mail 'downloader ['d])
-
-    (sleep 1000)
+    ;; Run NFT Tezos Downloader
+    (await (mail 'nft-tezos-downloader ['d]))
+    (sleep 1)
     (loop)
     ))
 

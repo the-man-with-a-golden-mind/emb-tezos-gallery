@@ -3,19 +3,20 @@
   (import (otus async))
   (import (bot gallery))
   (import (owl time))
-  (export run-actor)
+  (export run-tezos-downloader-actor)
   (begin
 
     (define (diff) 5000)
 
-    (define (run-actor)
+    (define (run-tezos-downloader-actor)
       (print "Actor: downloader is running")
-      (actor 'downloader (lambda ()
+      (actor 'nft-tezos-downloader (lambda ()
                            (let loop ((this {'queue '() 'lasttimestamp (time-ms)}))
                              (let* ((envelope (wait-mail))
                                     (sender msg envelope))
                                (case msg
                                  (['d]
+                                  (mail sender 'ok)
                                   (let ((q (this 'queue)))
                                     (if (= (length q) 0)
                                         (let* ((tokens (get-tokens))
